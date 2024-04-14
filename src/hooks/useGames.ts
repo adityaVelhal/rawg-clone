@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
-import apiClient from '../services/api-client';
-import { CanceledError } from 'axios';
 import Game from '../models/Games';
 import useData from './useData';
 import Genre from '../models/Genre';
+import Platform from './../models/Platform';
 
-const useGames = (genre: Genre | null) =>
-    useData<Game>('/games', { params: { genres: genre?.id } }, [genre]);
+const useGames = (genre: Genre | null, platform: Platform | null) =>
+    useData<Game>(
+        '/games',
+        { params: { genres: genre?.id, parent_platforms: platform?.id } },
+        [genre?.id, platform?.id]
+    );
 
 export default useGames;
