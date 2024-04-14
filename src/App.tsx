@@ -3,13 +3,11 @@ import NavBar from './components/NavBar';
 import GameGrid from './components/GameGrid';
 import GenreList from './components/GenreList';
 import { useState } from 'react';
-import Genre from './models/Genre';
 import PlatformSelector from './components/PlatformSelector';
-import Platform from './models/Platform';
+import GameQuery from './models/GameQuery';
 
 function App() {
-    const [selectedGenre, setGenre] = useState<Genre | null>(null);
-    const [selectedPlatform, setPlatform] = useState<Platform | null>(null);
+    const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 
     return (
         <Grid
@@ -27,12 +25,24 @@ function App() {
             </GridItem>
             <Show above="lg">
                 <GridItem area="aside" paddingX={5}>
-                    <GenreList onSelectGenre={setGenre} selectedGenre={selectedGenre} />
+                    <GenreList
+                        onSelectGenre={(genre) =>
+                            setGameQuery({ ...gameQuery, genre })
+                        }
+                        selectedGenre={gameQuery.genre}
+                    />
                 </GridItem>
             </Show>
             <GridItem area="main">
-                <PlatformSelector selectedPlatform={selectedPlatform} onSelectPlatform={setPlatform} />
-                <GameGrid platform={selectedPlatform} genre={selectedGenre} />
+                <PlatformSelector
+                    selectedPlatform={gameQuery.platform}
+                    onSelectPlatform={(platform) =>
+                        setGameQuery({ ...gameQuery, platform })
+                    }
+                />
+                <GameGrid
+                    gameQuery={gameQuery}
+                />
             </GridItem>
         </Grid>
     );
