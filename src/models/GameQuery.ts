@@ -4,6 +4,6 @@ import Platform from './Platform';
 export default interface GameQuery {
     genreId?: number;
     platformId?: number;
-    sortOrder: string;
-    search: string
+    sortOrder?: string;
+    search?: string
 }
